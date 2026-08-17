@@ -4,6 +4,12 @@
  * 
  * Ads can be enabled/disabled and prioritized
  * Each ad specifies which pages it can appear on
+ * 
+ * EXTERNAL AD NETWORK CONFIGURATION:
+ * - Script: https://pl30885739.effectivecpmnetwork.com/487b249ab83f6aa8203efe13fa4ee6d6/invoke.js
+ * - Container ID: container-487b249ab83f6aa8203efe13fa4ee6d6
+ * - Managed by: src/components/ExternalAdsContainer.tsx
+ * - Placement: Between main content and footer
  */
 
 import { type Advertisement } from '../services/adManager';

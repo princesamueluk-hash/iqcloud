@@ -20,6 +20,7 @@ import { ThemeMode, getInitialTheme, applyTheme, THEME_STORAGE_KEY } from './the
 import { getConfiguredRouteForHostname } from './domainRoutes';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { AdDisplay } from './components/AdDisplay';
+import { ExternalAdsContainer } from './components/ExternalAdsContainer';
 import { LoadingScreen, MIN_LOADING_DURATION } from './components/LoadingScreen';
 import { OfflineBanner, OfflineCatalogView } from './components/OfflineMode';
 import adManager from './services/adManager';
@@ -160,6 +161,10 @@ export default function App() {
       );
     }
 
+    // ============================================================
+    // PRIMARY DEDICATED TOOL ROUTES
+    // ============================================================
+
     // Dedicated Route: Generate IP
     if (currentPath === '/generate-ip' || currentPath === '/tools/generate-ip') {
       const toolDef = getToolById('generate-ip') || getToolBySlug('/generate-ip')!;
@@ -170,7 +175,17 @@ export default function App() {
       );
     }
 
-    // Dedicated Route: UK Profile & Sub-routes
+    // Dedicated Route: IP Lookup
+    if (currentPath === '/ip-lookup' || currentPath === '/tools/ip-lookup') {
+      const toolDef = getToolById('ip-lookup') || getToolBySlug('/ip-lookup')!;
+      return (
+        <ToolPageLayout tool={toolDef} onNavigate={navigateTo}>
+          <IpLookupTool />
+        </ToolPageLayout>
+      );
+    }
+
+    // Dedicated Route: UK Profile & Sub-routes (Build, Library, Comparison)
     if (
       currentPath === '/uk-profile' ||
       currentPath === '/tools/uk-profile' ||
@@ -180,7 +195,7 @@ export default function App() {
     ) {
       let subTab: 'generator' | 'create' | 'library' | 'comparison' = 'generator';
       let toolId = 'uk-profile';
-      if (currentPath === '/tools/build-profile') {
+      if (currentPath === '/tools/build-profile' || currentPath === '/tools/build-profile') {
         subTab = 'create';
         toolId = 'build-profile';
       } else if (currentPath === '/tools/profile-library') {
@@ -200,12 +215,42 @@ export default function App() {
       );
     }
 
-    // Dedicated Route: IP Lookup
-    if (currentPath === '/ip-lookup' || currentPath === '/tools/ip-lookup') {
-      const toolDef = getToolById('ip-lookup') || getToolBySlug('/ip-lookup')!;
+    // Dedicated Route: My IP
+    if (currentPath === '/my-ip' || currentPath === '/tools/my-ip' || currentPath === '/ip-check') {
+      const toolDef = getToolById('my-ip') || getToolBySlug('/tools/my-ip')!;
       return (
         <ToolPageLayout tool={toolDef} onNavigate={navigateTo}>
-          <IpLookupTool />
+          <MyIpTool />
+        </ToolPageLayout>
+      );
+    }
+
+    // Dedicated Route: VPN Detection
+    if (currentPath === '/vpn-detection' || currentPath === '/tools/vpn-detection') {
+      const toolDef = getToolById('vpn-detection') || getToolBySlug('/tools/vpn-detection')!;
+      return (
+        <ToolPageLayout tool={toolDef} onNavigate={navigateTo}>
+          <VpnDetectionTool />
+        </ToolPageLayout>
+      );
+    }
+
+    // Dedicated Route: DNS Lookup
+    if (currentPath === '/dns-lookup' || currentPath === '/tools/dns-lookup') {
+      const toolDef = getToolById('dns-lookup') || getToolBySlug('/tools/dns-lookup')!;
+      return (
+        <ToolPageLayout tool={toolDef} onNavigate={navigateTo}>
+          <DnsLookupTool />
+        </ToolPageLayout>
+      );
+    }
+
+    // Dedicated Route: Location Generator
+    if (currentPath === '/location-generator' || currentPath === '/tools/location-generator') {
+      const toolDef = getToolById('location-generator') || getToolBySlug('/tools/location-generator')!;
+      return (
+        <ToolPageLayout tool={toolDef} onNavigate={navigateTo}>
+          <LocationGeneratorTool />
         </ToolPageLayout>
       );
     }
@@ -220,19 +265,6 @@ export default function App() {
             canonicalPath="/dashboard"
           />
           <HomeView onNavigate={navigateTo} />
-        </>
-      );
-    }
-
-    if (currentPath === '/ip-check' || currentPath === '/my-ip' || currentPath === '/tools/my-ip') {
-      return (
-        <>
-          <SeoManager
-            title="Check My IP | NETWHO"
-            description="Inspect your current public IP address, network metadata, privacy indicators, and WebRTC candidate status through NETWHO's live IP analysis tools."
-            canonicalPath="/ip-check"
-          />
-          <MyIpTool />
         </>
       );
     }
@@ -377,6 +409,9 @@ export default function App() {
         <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-16">
           {renderCurrentView()}
         </main>
+
+        {/* External Advertisement Network - Global Placement */}
+        <ExternalAdsContainer placement="global" enabled={true} />
 
         {/* Global Categorized Footer with Creatiq Attribution */}
         <Footer onNavigate={navigateTo} />
