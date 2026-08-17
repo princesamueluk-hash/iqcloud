@@ -44,6 +44,7 @@ export default function App() {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [settingsProfiles, setSettingsProfiles] = useState(() => getSavedProfiles());
   const [isAppReady, setIsAppReady] = useState(false);
+  const [adsReady, setAdsReady] = useState(false);
 
   // Coordinate background initialization with the minimum 10-second branded presentation
   useEffect(() => {
@@ -75,20 +76,32 @@ export default function App() {
 
   // Initialize Ad Manager on app mount
   useEffect(() => {
+    if (!isAppReady) {
+      setAdsReady(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setAdsReady(true);
+    }, 4000);
+
+    return () => window.clearTimeout(timer);
+  }, [isAppReady]);
+
+  useEffect(() => {
     adManager.registerAds(NETWHO_ADS);
-    
-    // Try to display an eligible ad on the home page
-    if (typeof window !== 'undefined') {
+
+    // Try to display an eligible ad on the home page only after the app is ready.
+    if (typeof window !== 'undefined' && isAppReady) {
       const isHomePage = !window.location.hash || window.location.hash === '#' || window.location.hash === '#/';
       if (isHomePage) {
-        // Delay ad display slightly to let page render
         const timer = setTimeout(() => {
           adManager.displayNextEligibleAd('/');
-        }, 2000);
+        }, 4500);
         return () => clearTimeout(timer);
       }
     }
-  }, []);
+  }, [isAppReady]);
 
   useEffect(() => {
     applyTheme(theme);
@@ -412,9 +425,9 @@ export default function App() {
         </main>
 
         {/* Advertisement order: AD B first, AD C second, AD A third */}
-        <ScriptAdsManager scripts={['ad2']} enabled={true} />
-        <ScriptAdsManager scripts={['ad3']} enabled={true} />
-        <ExternalAdsContainer placement="global" enabled={true} />
+        {/* Ads are delayed until the app is fully loaded and usable. */}
+        <ScriptAdsManager scripts={['ad2', 'ad3']} enabled={adsReady} />
+        <ExternalAdsContainer placement="global" enabled={adsReady} />
 
         {/* Global Categorized Footer with Creatiq Attribution */}
         <Footer onNavigate={navigateTo} />
