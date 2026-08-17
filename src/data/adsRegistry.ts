@@ -6,10 +6,22 @@
  * Each ad specifies which pages it can appear on
  * 
  * EXTERNAL AD NETWORK CONFIGURATION:
+ * 
+ * AD 1 - Container-Based Advertisement:
  * - Script: https://pl30885739.effectivecpmnetwork.com/487b249ab83f6aa8203efe13fa4ee6d6/invoke.js
  * - Container ID: container-487b249ab83f6aa8203efe13fa4ee6d6
  * - Managed by: src/components/ExternalAdsContainer.tsx
  * - Placement: Between main content and footer
+ * 
+ * AD 2 - Script-Based Advertisement:
+ * - Script: https://pl30885738.effectivecpmnetwork.com/50/b6/fc/50b6fc8dcb4d46f0e4ec4f7a48984c97.js
+ * - Managed by: src/components/ScriptAdsManager.tsx
+ * - Type: Self-injecting advertisement (no container required)
+ * 
+ * AD 3 - Script-Based Advertisement:
+ * - Script: https://pl30885741.effectivecpmnetwork.com/d8/e7/66/d8e7667a985e60d3761ebb99b34e858b.js
+ * - Managed by: src/components/ScriptAdsManager.tsx
+ * - Type: Self-injecting advertisement (no container required)
  */
 
 import { type Advertisement } from '../services/adManager';

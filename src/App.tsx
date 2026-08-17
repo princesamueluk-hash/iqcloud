@@ -21,6 +21,7 @@ import { getConfiguredRouteForHostname } from './domainRoutes';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { AdDisplay } from './components/AdDisplay';
 import { ExternalAdsContainer } from './components/ExternalAdsContainer';
+import { ScriptAdsManager } from './components/ScriptAdsManager';
 import { LoadingScreen, MIN_LOADING_DURATION } from './components/LoadingScreen';
 import { OfflineBanner, OfflineCatalogView } from './components/OfflineMode';
 import adManager from './services/adManager';
@@ -412,6 +413,9 @@ export default function App() {
 
         {/* External Advertisement Network - Global Placement */}
         <ExternalAdsContainer placement="global" enabled={true} />
+
+        {/* Script-Based Advertisement Managers (AD 2 & AD 3) */}
+        <ScriptAdsManager scripts={['all']} enabled={true} />
 
         {/* Global Categorized Footer with Creatiq Attribution */}
         <Footer onNavigate={navigateTo} />
