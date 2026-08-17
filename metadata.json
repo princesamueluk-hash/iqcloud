@@ -1,0 +1,6 @@
+{
+  "name": "UK Survey Profile – Sample Register",
+  "description": "NETWHO (profieldhub.online) by Creatiq. Digital intelligence and online utility platform featuring IP lookup, VPN detection, network diagnostics, location insights, and structured profile generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
