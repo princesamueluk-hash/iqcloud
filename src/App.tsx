@@ -411,11 +411,10 @@ export default function App() {
           {renderCurrentView()}
         </main>
 
-        {/* External Advertisement Network - Global Placement */}
+        {/* Advertisement order: AD B first, AD C second, AD A third */}
+        <ScriptAdsManager scripts={['ad2']} enabled={true} />
+        <ScriptAdsManager scripts={['ad3']} enabled={true} />
         <ExternalAdsContainer placement="global" enabled={true} />
-
-        {/* Script-Based Advertisement Managers (AD 2 & AD 3) */}
-        <ScriptAdsManager scripts={['all']} enabled={true} />
 
         {/* Global Categorized Footer with Creatiq Attribution */}
         <Footer onNavigate={navigateTo} />

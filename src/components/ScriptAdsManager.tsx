@@ -140,15 +140,19 @@ export const ScriptAdsManager: React.FC<ScriptAdsManagerProps> = ({
     // Mark injection as attempted
     injectionAttemptedRef.current = true;
 
-    // Determine which scripts to load
-    const loadAll = scripts.includes('all');
-    
-    if (loadAll || scripts.includes('ad2')) {
-      injectScriptAd(AD_2_CONFIG);
-    }
-    
-    if (loadAll || scripts.includes('ad3')) {
-      injectScriptAd(AD_3_CONFIG);
+    // Maintain the required ad order: AD B first, AD C second.
+    const orderedScripts = scripts.includes('all')
+      ? ['ad2', 'ad3']
+      : scripts.filter((script) => script === 'ad2' || script === 'ad3');
+
+    for (const scriptId of orderedScripts) {
+      if (scriptId === 'ad2') {
+        injectScriptAd(AD_2_CONFIG);
+      }
+
+      if (scriptId === 'ad3') {
+        injectScriptAd(AD_3_CONFIG);
+      }
     }
 
     // Cleanup function

@@ -57,6 +57,16 @@ const injectExternalAdScript = (): void => {
     return;
   }
 
+  const container = document.getElementById(EXTERNAL_AD_CONTAINER_ID);
+  if (!container) {
+    setTimeout(() => {
+      if (!externalAdScriptTracker.get(EXTERNAL_AD_SCRIPT_ID)) {
+        injectExternalAdScript();
+      }
+    }, 250);
+    return;
+  }
+
   try {
     // Mark as being injected
     externalAdScriptTracker.set(EXTERNAL_AD_SCRIPT_ID, true);
